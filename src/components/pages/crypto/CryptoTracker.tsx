@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import CardList from "../../reusable-ui/CardList";
 
 type CryptoType = {
   id: string;
@@ -6,6 +8,7 @@ type CryptoType = {
   symbol: string;
   image: string;
   current_price: number;
+  price_change_percentage_24h: number;
 };
 export default function CryptoTracker() {
   const [cryptoData, setCryptoData] = useState<CryptoType[]>([]);
@@ -26,18 +29,36 @@ export default function CryptoTracker() {
   }, []);
 
   return (
-    <div>
-      
-        {cryptoData.length > 1 ? (
-          <>
-            <img src={cryptoData[3].image} alt="crypto" />
-            <p>{cryptoData[3].name}</p>
-            <p>{cryptoData[3].current_price}</p>
-          </>
-        ) : (
-          "y a rien"
-        )}
+    <CryptoCardStyled>
+      {cryptoData.length > 1 ? (
+        <>
+          <img src={cryptoData[3].image} alt="crypto_icon" />
+          <p>{cryptoData[3].name}</p>
+          <p>{cryptoData[3].current_price}</p>
+        </>
+      ) : (
+        "Chargement..."
+      )}
 
-    </div>
+      <h1>Top 20 crypto</h1>
+
+      {cryptoData.slice(0, 20).map((crypto) => (
+        <CardList
+          key={crypto.id}
+          cryptoName={crypto.name}
+          src={crypto.image}
+          currentPrice={crypto.current_price}
+          pricePourcentage24h={crypto.price_change_percentage_24h}
+          symbol={crypto.symbol}
+        />
+      ))}
+    </CryptoCardStyled>
   );
 }
+
+const CryptoCardStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: red;
+`;
