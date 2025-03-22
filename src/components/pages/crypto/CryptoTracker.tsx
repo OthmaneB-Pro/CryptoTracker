@@ -30,6 +30,26 @@ export default function CryptoTracker() {
 
   return (
     <CryptoCardStyled>
+      <nav>
+        <ul>
+          <li>
+            <a href="/">Accueil</a>
+          </li>
+          <li>
+            <a href="/crypto">Crypto</a>
+          </li>
+          <li>
+            <a href="/crypto">Recherche</a>
+          </li>
+          <li>
+            <button>Inscription</button>
+          </li>
+          <li>
+            <button>Connexion</button>
+          </li>
+        </ul>
+      </nav>
+
       <h1>Top 20 crypto</h1>
 
       <CardTabStyled>
@@ -61,6 +81,40 @@ const CryptoCardStyled = styled.div`
   align-items: center;
   background: black;
   color: white;
+  min-height: 100vh;
+  nav {
+    display: flex;
+    justify-content: space-around;
+    ul {
+      display: flex;
+      list-style: none;
+      li {
+        margin: 10px;
+        a {
+          text-decoration: none;
+          color: white;
+
+          &:hover {
+            transition: all 0.2s ease-in-out;
+            color: #979797;
+          }
+        }
+        button {
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          background: #7e7e7e;
+          color: white;
+
+          &:hover {
+            cursor: pointer;
+            background: #494949;
+            transition: all 0.2s ease-in-out;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const CardTabStyled = styled.div`
