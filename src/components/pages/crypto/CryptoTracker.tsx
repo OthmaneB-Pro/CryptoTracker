@@ -30,28 +30,27 @@ export default function CryptoTracker() {
 
   return (
     <CryptoCardStyled>
-      {cryptoData.length > 1 ? (
-        <>
-          <img src={cryptoData[3].image} alt="crypto_icon" />
-          <p>{cryptoData[3].name}</p>
-          <p>{cryptoData[3].current_price}</p>
-        </>
-      ) : (
-        "Chargement..."
-      )}
-
       <h1>Top 20 crypto</h1>
 
-      {cryptoData.slice(0, 20).map((crypto) => (
-        <CardList
-          key={crypto.id}
-          cryptoName={crypto.name}
-          src={crypto.image}
-          currentPrice={crypto.current_price}
-          pricePourcentage24h={crypto.price_change_percentage_24h}
-          symbol={crypto.symbol}
-        />
-      ))}
+      <CardTabStyled>
+        {cryptoData.length > 1
+          ? cryptoData
+              .slice(0, 20)
+              .map((crypto) => (
+                <CardList
+                  key={crypto.id}
+                  cryptoName={crypto.name}
+                  src={crypto.image}
+                  currentPrice={crypto.current_price}
+                  pricePourcentage24h={crypto.price_change_percentage_24h}
+                  classNamePrice={
+                    crypto.price_change_percentage_24h > 0 ? "green" : "red"
+                  }
+                  symbol={crypto.symbol}
+                />
+              ))
+          : "Chargement..."}
+      </CardTabStyled>
     </CryptoCardStyled>
   );
 }
@@ -60,5 +59,14 @@ const CryptoCardStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: red;
+  background: black;
+  color: white;
+`;
+
+const CardTabStyled = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  column-gap: 10px;
+  margin-top: 40px;
 `;
