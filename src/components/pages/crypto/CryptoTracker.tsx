@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import CardList from "../../reusable-ui/CardList";
 
@@ -12,6 +12,7 @@ type CryptoType = {
 };
 export default function CryptoTracker() {
   const [cryptoData, setCryptoData] = useState<CryptoType[]>([]);
+  const cryptoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCryptoData = async () => {
@@ -28,6 +29,11 @@ export default function CryptoTracker() {
     fetchCryptoData();
   }, []);
 
+  const handleScroll = (event: React.MouseEvent) => {
+    event.preventDefault();
+    cryptoRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <CryptoCardStyled>
       <nav>
@@ -36,7 +42,9 @@ export default function CryptoTracker() {
             <a href="/">Accueil</a>
           </li>
           <li>
-            <a href="/crypto">Crypto</a>
+            <a onClick={handleScroll} href="/">
+              Crypto
+            </a>
           </li>
           <li>
             <a href="/crypto">Recherche</a>
@@ -50,7 +58,7 @@ export default function CryptoTracker() {
         </ul>
       </nav>
 
-      <h1>Top 20 crypto</h1>
+      <h1 ref={cryptoRef}>Cryptos populaires</h1>
 
       <CardTabStyled>
         {cryptoData.length > 1
@@ -82,9 +90,14 @@ const CryptoCardStyled = styled.div`
   background: black;
   color: white;
   min-height: 100vh;
+
+  h1 {
+    margin: 100px 0 50px 0;
+  }
   nav {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 50px;
     ul {
       display: flex;
       list-style: none;
@@ -97,6 +110,7 @@ const CryptoCardStyled = styled.div`
           &:hover {
             transition: all 0.2s ease-in-out;
             color: #979797;
+            text-decoration: underline;
           }
         }
         button {
