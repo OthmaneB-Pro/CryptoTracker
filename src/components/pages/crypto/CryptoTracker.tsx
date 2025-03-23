@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import CardList from "../../reusable-ui/CardList";
 import { fetchCryptoData } from "../../../api/CoinGeckoApi";
+import NavbarCrypto from "./NavbarCrypto";
 
 type CryptoType = {
   id: string;
@@ -26,28 +27,8 @@ export default function CryptoTracker() {
 
   return (
     <CryptoCardStyled>
-      <nav>
-        <ul>
-          <li>
-            <a href="/">Accueil</a>
-          </li>
-          <li>
-            <a onClick={handleScroll} href="/">
-              Crypto
-            </a>
-          </li>
-          <li>
-            <a href="/crypto">Recherche</a>
-          </li>
-          <li>
-            <button>Inscription</button>
-          </li>
-          <li>
-            <button>Connexion</button>
-          </li>
-        </ul>
-      </nav>
 
+      <NavbarCrypto handleScroll={handleScroll} />
       <h1 ref={cryptoRef}>Cryptos populaires</h1>
 
       <CardTabStyled>
@@ -84,41 +65,7 @@ const CryptoCardStyled = styled.div`
   h1 {
     margin: 100px 0 50px 0;
   }
-  nav {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 50px;
-    ul {
-      display: flex;
-      list-style: none;
-      li {
-        margin: 10px;
-        a {
-          text-decoration: none;
-          color: white;
-
-          &:hover {
-            transition: all 0.2s ease-in-out;
-            color: #979797;
-            text-decoration: underline;
-          }
-        }
-        button {
-          border: none;
-          padding: 5px;
-          border-radius: 5px;
-          background: #7e7e7e;
-          color: white;
-
-          &:hover {
-            cursor: pointer;
-            background: #494949;
-            transition: all 0.2s ease-in-out;
-          }
-        }
-      }
-    }
-  }
+  
 `;
 
 const CardTabStyled = styled.div`
