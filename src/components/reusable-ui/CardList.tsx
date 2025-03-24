@@ -24,8 +24,8 @@ export default function CardList({
       <h3 className="symbol">{symbol}</h3>
       <h3>{cryptoName}</h3>
 
-      <p className="currentPrice">{currentPrice}</p>
-      <p className={classNamePrice}>{pricePourcentage24h}</p>
+      <p className="currentPrice">{currentPrice} €</p>
+      <p className={classNamePrice}>{pricePourcentage24h} %</p>
     </CardListStyled>
   );
 }
@@ -65,6 +65,7 @@ const CardListStyled = styled.div`
       object-fit: contain;
     }
   }
+
   .currentPrice {
     color: #cccc03;
   }
