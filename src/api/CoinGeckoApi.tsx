@@ -9,3 +9,15 @@ export const fetchCryptoData = async (setCryptoData: any) => {
     console.log("Erreur dans la récupération des données de crypto", error);
   }
 };
+
+export const fetchCryptoDetails = async (setCryptoData: any, id: string) => {
+    try {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}`
+      );
+      const data = await res.json();
+      setCryptoData(data);
+    } catch (error) {
+      console.log("Erreur dans la récupération des détails de la crypto", error);
+    }
+};
