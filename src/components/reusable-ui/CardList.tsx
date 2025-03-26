@@ -1,20 +1,24 @@
 import styled from "styled-components";
 
 type CardListType = {
+  id: string;
   src: string;
   cryptoName: string;
   symbol: string;
   currentPrice: number;
   pricePourcentage24h: number;
   classNamePrice: string;
+  onClick: (cryptoId: string) => void;
 };
 export default function CardList({
+  id,
   src,
   cryptoName,
   symbol,
   currentPrice,
   pricePourcentage24h,
   classNamePrice,
+  onClick,
 }: CardListType) {
   return (
     <CardListStyled>
@@ -26,6 +30,7 @@ export default function CardList({
 
       <p className="currentPrice">{currentPrice} $</p>
       <p className={classNamePrice}>{pricePourcentage24h} %</p>
+      <button onClick={() =>onClick(id)}>Voir</button>
     </CardListStyled>
   );
 }

@@ -5,10 +5,12 @@ import { fetchCryptoData } from "../../../api/CoinGeckoApi";
 import NavbarCrypto from "./NavbarCrypto";
 import TitleCrypto from "./TitleCrypto";
 import { CryptoType } from "./type/typeCrypto";
+import { useNavigate } from "react-router";
 
 export default function CryptoTracker() {
   const [cryptoData, setCryptoData] = useState<CryptoType[]>([]);
   const cryptoRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchCryptoData(setCryptoData);
@@ -17,6 +19,10 @@ export default function CryptoTracker() {
   const handleScroll = (event: React.MouseEvent) => {
     event.preventDefault();
     cryptoRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleClick = (cryptoId: string) => {
+    navigate(`/crypto/${cryptoId}`)
   };
 
   return (
@@ -31,6 +37,7 @@ export default function CryptoTracker() {
               .map((crypto) => (
                 <CardList
                   key={crypto.id}
+                  id={crypto.id}
                   cryptoName={crypto.name}
                   src={crypto.image}
                   currentPrice={crypto.current_price}
@@ -39,6 +46,7 @@ export default function CryptoTracker() {
                     crypto.price_change_percentage_24h > 0 ? "green" : "red"
                   }
                   symbol={crypto.symbol}
+                  onClick={() =>handleClick(crypto.id)}
                 />
               ))
           : "Chargement..."}
