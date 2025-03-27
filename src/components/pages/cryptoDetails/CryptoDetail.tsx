@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { fetchCryptoDetails } from "../../../api/CoinGeckoApi";
+import styled from "styled-components";
+import NavbarCrypto from "../crypto/NavbarCrypto";
 
 type CryptoType = {
   id: string;
@@ -26,11 +28,55 @@ export default function CryptoDetail() {
   if (!cryptoDetails) return <p>Chargement...</p>;
 
   return (
-    <div>
+    <CryptoDetailsStyled
+      priceChange={cryptoDetails.market_data.price_change_percentage_24h}
+    >
+      <NavbarCrypto handleScroll={() => {}} />
       <h1>{cryptoDetails.name}</h1>
       <img src={cryptoDetails.image.large} alt={cryptoDetails.name} />
       <p>{cryptoDetails.market_data.current_price.usd} $</p>
-      <p>{cryptoDetails.market_data.price_change_percentage_24h} %</p>
-    </div>
+      <p>{cryptoDetails?.market_data.price_change_percentage_24h} %</p>
+    </CryptoDetailsStyled>
   );
 }
+
+interface CryptoDetailsProps {
+  priceChange: number;
+}
+
+const CryptoDetailsStyled = styled.div<CryptoDetailsProps>`
+  color: white;
+  background-color: black;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 20px 0;
+    text-transform: uppercase;
+  }
+
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin: 20px 0;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  p:last-of-type {
+    font-weight: bold;
+    color: ${({ priceChange }: { priceChange: number }) =>
+      priceChange > 0 ? "limegreen" : "red"};
+  }
+`;
