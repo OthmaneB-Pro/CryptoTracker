@@ -21,3 +21,16 @@ export const fetchCryptoDetails = async (setCryptoData: any, id: string) => {
       console.log("Erreur dans la récupération des détails de la crypto", error);
     }
 };
+
+export const fetchCryptoChart = async (setChartData: any, id: string) => {
+    try {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1&interval=hourly`
+      );
+      const data = await res.json();
+      setChartData(data.prices);
+    } catch (error) {
+      console.log("Erreur lors de la récupération du graphique", error);
+    }
+  };
+  
