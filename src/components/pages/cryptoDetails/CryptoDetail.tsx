@@ -41,14 +41,15 @@ export default function CryptoDetail() {
     }
   }, [id]);
 
-
-  const formattedChartData = chartData ? chartData.map(([timestamp, price]) => ({
-    time: new Date(timestamp).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    price,
-  })) : [];
+  const formattedChartData = chartData
+    ? chartData.map(([timestamp, price]) => ({
+        time: new Date(timestamp).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        price,
+      }))
+    : [];
 
   if (!cryptoDetails) return <p>Chargement...</p>;
 
@@ -57,24 +58,30 @@ export default function CryptoDetail() {
       priceChange={cryptoDetails.market_data.price_change_percentage_24h}
     >
       <NavbarCrypto handleScroll={() => {}} />
-      <ResponsiveContainer width={600} height={400}>
-        <LineChart data={formattedChartData}>
-          <XAxis dataKey="time" />
-          <YAxis domain={["auto", "auto"]} />
-          <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke="#82ca9d"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
 
-      <h1>{cryptoDetails.name}</h1>
       <img src={cryptoDetails.image.large} alt={cryptoDetails.name} />
-      <p>{cryptoDetails.market_data.current_price.usd} $</p>
-      <p>{cryptoDetails?.market_data.price_change_percentage_24h} %</p>
+      <h1>{cryptoDetails.name}</h1>
+
+      <ChartWrapper>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={formattedChartData}>
+            <XAxis dataKey="time" />
+            <YAxis domain={["auto", "auto"]} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#82ca9d"
+              strokeWidth={2}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartWrapper>
+      <p>Prix actuel : {cryptoDetails.market_data.current_price.usd} $</p>
+      <p>
+        Pourcentage 24h :{" "}
+        {cryptoDetails?.market_data.price_change_percentage_24h} %
+      </p>
     </CryptoDetailsStyled>
   );
 }
@@ -114,4 +121,12 @@ const CryptoDetailsStyled = styled.div<CryptoDetailsProps>`
     color: ${({ priceChange }: { priceChange: number }) =>
       priceChange > 0 ? "limegreen" : "red"};
   }
+`;
+
+const ChartWrapper = styled.div`
+  width: 1200px;
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 20px 0;
 `;
