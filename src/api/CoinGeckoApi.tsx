@@ -22,15 +22,24 @@ export const fetchCryptoDetails = async (setCryptoData: any, id: string) => {
     }
 };
 
-export const fetchCryptoChart = async (setChartData: any, id: string) => {
-    try {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1&interval=hourly`
-      );
-      const data = await res.json();
+export const fetchCryptoChart = async (
+  setChartData: (data: number[][]) => void,
+  id: string
+) => {
+  try {
+    const res = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=2`
+    );
+    const data = await res.json();
+
+    if (data && Array.isArray(data.prices)) {
       setChartData(data.prices);
-    } catch (error) {
-      console.log("Erreur lors de la récupération du graphique", error);
+    } else {
+      console.warn("Aucune donnée de prix disponible.");
+      setChartData([]);
     }
-  };
-  
+  } catch (error) {
+    console.error("Erreur lors de la récupération du graphique", error);
+    setChartData([]);
+  }
+};

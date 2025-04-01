@@ -41,13 +41,14 @@ export default function CryptoDetail() {
     }
   }, [id]);
 
-  const formattedChartData = chartData.map(([timestamp, price]) => ({
+
+  const formattedChartData = chartData ? chartData.map(([timestamp, price]) => ({
     time: new Date(timestamp).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     }),
     price,
-  }));
+  })) : [];
 
   if (!cryptoDetails) return <p>Chargement...</p>;
 
@@ -56,7 +57,7 @@ export default function CryptoDetail() {
       priceChange={cryptoDetails.market_data.price_change_percentage_24h}
     >
       <NavbarCrypto handleScroll={() => {}} />
-      <ResponsiveContainer width="90%" height={300}>
+      <ResponsiveContainer width={600} height={400}>
         <LineChart data={formattedChartData}>
           <XAxis dataKey="time" />
           <YAxis domain={["auto", "auto"]} />
