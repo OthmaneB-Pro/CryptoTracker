@@ -15,7 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { CryptoDetailsProps, CryptoType } from "./type/typeCryptoDetails";
-
+import Loading from "./Loading";
 
 export default function CryptoDetail() {
   const { id } = useParams();
@@ -39,17 +39,15 @@ export default function CryptoDetail() {
       }))
     : [];
 
-  if (!cryptoDetails) return <p>Chargement...</p>;
+  if (!cryptoDetails) return <Loading />;
 
   return (
     <CryptoDetailsStyled
       priceChange={cryptoDetails.market_data.price_change_percentage_24h}
     >
       <NavbarCrypto handleScroll={() => {}} />
-
       <img src={cryptoDetails.image.large} alt={cryptoDetails.name} />
       <h1>{cryptoDetails.name}</h1>
-
       <ChartWrapper>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formattedChartData}>
