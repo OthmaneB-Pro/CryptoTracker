@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 export default function NavbarCrypto({ handleScroll }: any) {
+  const navigate = useNavigate()
   return (
     <NavbarCryptoStyled>
       <ul>
@@ -16,7 +18,7 @@ export default function NavbarCrypto({ handleScroll }: any) {
           <a href="/crypto">Recherche</a>
         </li>
         <li>
-          <button>Inscription</button>
+          <button onClick={() => navigate("/login")}>Inscription</button>
         </li>
         <li>
           <button>Connexion</button>
