@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import NavbarCrypto from "../crypto/NavbarCrypto";
+import Register from "./Register";
 
 export default function LoginPage() {
   return (
     <LoginStyled>
       <NavbarCrypto handleScroll={() => {}} />
-      LoginPage</LoginStyled>
-  )
+      <Register />
+    </LoginStyled>
+  );
 }
 const LoginStyled = styled.div`
   display: flex;
