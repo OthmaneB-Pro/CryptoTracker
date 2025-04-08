@@ -1,17 +1,34 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./yupSchema";
+
+type FormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 export default function Register() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isRegister, setIsRegister] = useState(false);
   return (
     <div>
       <RegisterStyled onSubmit={handleSubmit((data) => console.log(data))}>
         <h2>{isRegister ? "Connexion" : "Inscription"}</h2>
         <input type="text" placeholder="Nom" {...register("name")} />
+        {errors.name && <p>{errors.name.message}</p>}
+
         {!isRegister && (
-          <input type="email" placeholder="Email" {...register("email")} />
+          <>
+            <input type="email" placeholder="Email" {...register("email")} />
+            {errors.email && <p>{errors.email.message}</p>}
+          </>
         )}
 
         <input
@@ -19,6 +36,7 @@ export default function Register() {
           placeholder="Mot de passe"
           {...register("password")}
         />
+        {errors.password && <p>{errors.password.message}</p>}
         <button type="submit">S'inscrire</button>
         {!isRegister && (
           <p>
@@ -48,6 +66,7 @@ const RegisterStyled = styled.form`
   padding: 10px;
   background-color: #494949;
 
+
   input {
     width: 400px;
     height: 40px;
@@ -59,9 +78,9 @@ const RegisterStyled = styled.form`
     padding: 10px;
     font-size: 14px;
   }
-  input::placeholder{
-      color: white;
-    }
+  input::placeholder {
+    color: white;
+  }
   button {
     width: 400px;
     height: 40px;
