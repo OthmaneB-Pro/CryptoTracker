@@ -62,9 +62,10 @@ const RegisterStyled = styled.form`
   border: 1px solid white;
   border-radius: 15px;
   width: 500px;
-  height: 400px;
+  min-height: 400px;
   padding: 10px;
   background-color: #494949;
+
 
 
   input {
