@@ -67,10 +67,9 @@ const RegisterStyled = styled.form`
   background-color: #494949;
 
 
-
   input {
-    width: 400px;
-    height: 40px;
+    width: 300px;
+    height: 20px;
     margin: 10px 0;
     border-radius: 5px;
     border: none;
@@ -83,7 +82,7 @@ const RegisterStyled = styled.form`
     color: white;
   }
   button {
-    width: 400px;
+    width: 300px;
     height: 40px;
     margin: 10px 0;
     border-radius: 5px;
