@@ -25,7 +25,7 @@ export default function Register() {
   const onSubmit = (data: FormValues) => {
     console.log(data);
     setUsername(data.name)
-    navigate(`/${username}`);
+    navigate(`/${data.name}`);
   }
 
   return (
