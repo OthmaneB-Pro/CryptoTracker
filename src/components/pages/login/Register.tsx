@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./yupSchema";
+import { useNavigate } from "react-router";
+import { UserContext } from "../../../context/UserContext";
 
 type FormValues = {
   name: string;
@@ -17,9 +19,18 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isRegister, setIsRegister] = useState(false);
+  const navigate = useNavigate();
+  const { username, setUsername } = useContext(UserContext)
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+    setUsername(data.name)
+    navigate(`/${username}`);
+  }
+
   return (
     <div>
-      <RegisterStyled onSubmit={handleSubmit((data) => console.log(data))}>
+      <RegisterStyled onSubmit={handleSubmit(onSubmit)}>
         <h2>{isRegister ? "Connexion" : "Inscription"}</h2>
         <input type="text" placeholder="Nom" {...register("name")} />
         {errors.name && <p>{errors.name.message}</p>}
