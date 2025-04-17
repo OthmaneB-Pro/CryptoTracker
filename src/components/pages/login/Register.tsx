@@ -20,7 +20,7 @@ export default function Register() {
   } = useForm<FormValues>({ resolver: yupResolver(schema) });
   const [isRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
-  const { username, setUsername } = useContext(UserContext)
+  const { setUsername } = useContext(UserContext)
 
   const onSubmit = (data: FormValues) => {
     console.log(data);

@@ -6,6 +6,8 @@ import styled from "styled-components";
 export default function NavbarCrypto({ handleScroll }: any) {
   const navigate = useNavigate();
   const { username } = useParams();
+  
+  console.log("username param:", username);
   return (
     <NavbarCryptoStyled>
       <ul>
@@ -20,7 +22,7 @@ export default function NavbarCrypto({ handleScroll }: any) {
         <li>
           <a href="/crypto">Recherche</a>
         </li>
-        {username ? (
+        {username && username !== "undefined" && username.trim() !== "" ?  (
           <li>
             <a href="/login">Deconnexion</a>
           </li>
