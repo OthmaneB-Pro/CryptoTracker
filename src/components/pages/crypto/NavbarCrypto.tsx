@@ -1,26 +1,41 @@
+
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
+
 export default function NavbarCrypto({ handleScroll }: any) {
+  const navigate = useNavigate();
+  const { username } = useParams();
+  
+  console.log("username param:", username);
   return (
     <NavbarCryptoStyled>
       <ul>
         <li>
-          <a href="/">Accueil</a>
+          <a href={`/${username}`}>Accueil</a>
         </li>
         <li>
-          <a onClick={handleScroll} href="/">
+          <a onClick={handleScroll} href={`/${username}`}>
             Crypto
           </a>
         </li>
         <li>
           <a href="/crypto">Recherche</a>
         </li>
-        <li>
-          <button>Inscription</button>
-        </li>
-        <li>
-          <button>Connexion</button>
-        </li>
+        {username && username !== "undefined" && username.trim() !== "" ?  (
+          <li>
+            <a href="/login">Deconnexion</a>
+          </li>
+        ) : (
+          <>
+            <li>
+              <button onClick={() => navigate("/login")}>Inscription</button>
+            </li>
+            <li>
+              <button>Connexion</button>
+            </li>
+          </>
+        )}
       </ul>
     </NavbarCryptoStyled>
   );
